@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>АвтоКит — Подбор и заказ автозапчастей</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --wa: #25d366;
+      --wa-hover: #1ebc57;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #334155;
+      --error: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px 15px 80px;
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(37, 99, 235, 0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .info-list {
+      list-style: none;
+      font-size: 0.95rem;
+      margin-bottom: 18px;
+    }
+
+    .info-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      color: var(--muted);
+    }
+
+    .info-list strong {
+      color: var(--text);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #cbd5e1;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .vin-input {
+      text-transform: uppercase;
+      font-family: monospace;
+      letter-spacing: 0.05em;
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 13px 20px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-wa {
+      background: var(--wa);
+      color: #052e16;
+    }
+
+    .btn-wa:hover {
+      background: var(--wa-hover);
+    }
+
+    .btn-submit {
+      background: var(--accent);
+      color: white;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-hover);
+    }
+
+    /* Плавающая кнопка WhatsApp */
+    .wa-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--wa);
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+      z-index: 100;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1);
+    }
+
+    .wa-float svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge">Магазин автозапчастей</div>
+      <h1>АвтоКит</h1>
+      <p class="subtitle">Оригиналы и качественные дубликаты в Костанае</p>
+    </header>
+
+    <div class="card">
+      <ul class="info-list">
+        <li>
+          <span>📍</span>
+          <span><strong>Адрес:</strong> г. Костанай, ул. Ворошилова 11А</span>
+        </li>
+        <li>
+          <span>🌐</span>
+          <span><strong>Сайт:</strong> akit.kz</span>
+        </li>
+      </ul>
+      <a href="https://wa.me/77000000000" id="directWaBtn" class="btn btn-wa" target="_blank" rel="noopener noreferrer">
+        Чат с менеджером в WhatsApp
+      </a>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size: 1.25rem; margin-bottom: 16px;">Запрос на подбор детали</h2>
+      <form id="partRequestForm">
+        <div class="form-group">
+          <label for="vinInput">VIN-код или номер кузова *</label>
+          <input 
+            type="text" 
+            id="vinInput" 
+            class="vin-input" 
+            maxlength="17" 
+            placeholder="17 знаков (например, XTA...)" 
+            required
+          >
+          <span class="hint" id="vinCounter">Введено: 0 / 17</span>
+        </div>
+
+        <div class="form-group">
+          <label for="partsInput">Необходимые запчасти *</label>
+          <textarea 
+            id="partsInput" 
+            rows="3" 
+            placeholder="Передние тормозные колодки, масляный фильтр..." 
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="phoneInput">Номер телефона для связи *</label>
+          <input 
+            type="tel" 
+            id="phoneInput" 
+            placeholder="+7 (705) 000-00-00" 
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn-submit">
+          Отправить заявку в WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Плавающая кнопка WhatsApp -->
+  <a href="https://wa.me/77000000000" id="floatWaBtn" class="wa-float" target="_blank" rel="noopener noreferrer" title="Написать в WhatsApp">
+    <svg viewBox="0 0 24 24">
+      <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 18.06c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.13 8.13 0 0 1-1.25-4.29c0-4.51 3.67-8.18 8.18-8.18 2.19 0 4.24.85 5.79 2.4 1.55 1.55 2.4 3.6 2.4 5.78 0 4.52-3.67 8.19-8.17 8.19zm4.49-6.13c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.29z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Укажите рабочий номер телефона без плюса и пробелов
+    const STORE_PHONE = "77000000000";
+
+    // Установка ссылок на прямой контакт
+    document.getElementById('directWaBtn').href = `https://wa.me/${STORE_PHONE}`;
+    document.getElementById('floatWaBtn').href = `https://wa.me/${STORE_PHONE}`;
+
+    const vinInput = document.getElementById('vinInput');
+    const vinCounter = document.getElementById('vinCounter');
+    const form = document.getElementById('partRequestForm');
+
+    // Счетчик и принудительный верхний регистр для VIN
+    vinInput.addEventListener('input', (e) => {
+      e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      vinCounter.textContent = `Введено: ${e.target.value.length} / 17`;
+      if (e.target.value.length === 17) {
+        vinCounter.style.color = '#34d399';
+      } else {
+        vinCounter.style.color = 'var(--muted)';
+      }
+    });
+
+    // Обработка отправки заявки
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const vin = vinInput.value.trim();
+      const parts = document.getElementById('partsInput').value.trim();
+      const clientPhone = document.getElementById('phoneInput').value.trim();
+
+      if (vin.length < 17) {
+        alert('Пожалуйста, введите корректный VIN-код из 17 символов.');
+        return;
+      }
+
+      const text = `Здравствуйте! Заявка на подбор запчастей:\n\n` +
+                   `🚘 *VIN:* ${vin}\n` +
+                   `🔧 *Детали:* ${parts}\n` +
+                   `📞 *Контакты клиента:* ${clientPhone}`;
+
+      const waUrl = `https://wa.me/${STORE_PHONE}?text=${encodeURIComponent(text)}`;
+      window.open(waUrl, '_blank');
+    });
+  </script>
+</body>
+</html>
